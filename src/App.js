@@ -1,31 +1,50 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import ContactForm from './components/ContactForm/ContactForm';
-import ContactList from './components/ContactList/ContactList';
-import Filter from './components/Filter/Filter';
-import Container from './components/Container/Container';
-import { fetchContacts } from './redux/operations';
-import { getLoading } from './redux/selectors';
-import './App.css';
+import { useEffect, Suspense, lazy } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Switch } from 'react-router-dom';
+import AppBar from './components/AppBar';
+// import Container from './components/Container';
+import PrivateRoute from './components/PrivateRoute';
+import PublicRoute from './components/PublicRoute';
+import { fetchCurrentUser } from './redux/auth/auth-operations';
+import { getIsRefreshingUser } from './redux/auth/auth-selectors';
+
+const HomeView = lazy(() => import('./views/HomeView'));
+const RegisterView = lazy(() => import('./views/RegisterView'));
+const LoginView = lazy(() => import('./views/LoginView'));
+const ContactsView = lazy(() => import('./views/ContactsView'));
 
 export default function App() {
-  const loadingContacts = useSelector(getLoading);
   const dispatch = useDispatch();
+  const isRefreshingUser = useSelector(getIsRefreshingUser);
+  console.log(isRefreshingUser);
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(fetchCurrentUser());
   }, [dispatch]);
 
   return (
-    <Container>
-      <h1 className="phonebook">Phonebook</h1>
-      <ContactForm />
+    !isRefreshingUser && (
+      <>
+        <AppBar />
 
-      {loadingContacts && <p>Loading...</p>}
-      <h2 className="contacts">Contacts</h2>
-      <Filter />
+        <Suspense fallback={<p>Loading...</p>}>
+          <Switch>
+            <PublicRoute exact path="/">
+              <HomeView />
+            </PublicRoute>
+            <PublicRoute path="/register" restricted>
+              <RegisterView />
+            </PublicRoute>
+            <PublicRoute path="/login" restricted redirectTo="/contacts">
+              <LoginView />
+            </PublicRoute>
 
-      <ContactList />
-    </Container>
+            <PrivateRoute path="/contacts" redirectTo="/login">
+              <ContactsView />
+            </PrivateRoute>
+          </Switch>
+        </Suspense>
+      </>
+    )
   );
 }

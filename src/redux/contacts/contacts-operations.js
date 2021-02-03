@@ -1,4 +1,4 @@
-import * as serviceAPI from '../services/service-api';
+import * as serviceAPI from '../../services/service-api';
 import {
   fetchContactsRequest,
   fetchContactsSuccess,
@@ -9,7 +9,7 @@ import {
   deleteContactRequest,
   deleteContactSuccess,
   deleteContactError,
-} from './actions';
+} from './contacts-actions';
 
 export const fetchContacts = () => async dispatch => {
   dispatch(fetchContactsRequest());

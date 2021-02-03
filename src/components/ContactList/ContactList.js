@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteContact } from '../../redux/operations';
-import { getVisibleContacts } from '../../redux/selectors';
+import { deleteContact } from '../../redux/contacts/contacts-operations';
+import { getVisibleContacts } from '../../redux/contacts/contacts-selectors';
 import s from './ContactList.module.css';
 
 export default function ContactList() {
