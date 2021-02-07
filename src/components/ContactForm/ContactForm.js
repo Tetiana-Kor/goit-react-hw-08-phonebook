@@ -88,7 +88,7 @@ export default function ContactForm() {
           value={number}
           placeholder="000-00-00"
           onChange={handleChangeNumber}
-          pattern="[0-7]{3}-[0-7]{2}-[0-7]{2}"
+          pattern="[0-9]{3}-[0-9]{2}-[0-9]{2}"
         />
       </label>
       <button className={s.btn} type="submit">

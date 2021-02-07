@@ -3,10 +3,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import ContactForm from '../components/ContactForm';
 import ContactList from '../components/ContactList';
 import Filter from '../components/Filter';
-import Container from '../components/Container';
+import Section from '../components/Section';
 import { fetchContacts } from '../redux/contacts/contacts-operations';
 import { getLoading } from '../redux/contacts/contacts-selectors';
-// import './App.css';
+
+const styles = {
+  phonebook: {
+    textAlign: 'center',
+  },
+  contacts: {
+    textAlign: 'center',
+  },
+};
 
 export default function ContactsView() {
   const loadingContacts = useSelector(getLoading);
@@ -17,15 +25,15 @@ export default function ContactsView() {
   }, [dispatch]);
 
   return (
-    <Container>
-      <h1 className="phonebook">Phonebook</h1>
+    <Section>
+      <h1 style={styles.phonebook}>Phonebook</h1>
       <ContactForm />
 
       {loadingContacts && <p>Loading...</p>}
-      <h2 className="contacts">Contacts</h2>
+      <h2 style={styles.contacts}>Contacts</h2>
       <Filter />
 
       <ContactList />
-    </Container>
+    </Section>
   );
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { register } from '../redux/auth/auth-operations';
+import Button from '../components/Button';
 
 const styles = {
   form: {
@@ -13,7 +14,7 @@ const styles = {
   },
 };
 
-export default function RegisterView() {
+export default function RegisterView({ onClick }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,6 +22,12 @@ export default function RegisterView() {
 
   const handleSubmit = event => {
     event.preventDefault();
+
+    if (name === '' || email === '' || password === '') {
+      alert('fill out the form');
+      return;
+    }
+
     dispatch(register({ name, email, password }));
     setName('');
     setEmail('');
@@ -42,7 +49,7 @@ export default function RegisterView() {
 
   return (
     <div>
-      <h1>Registration</h1>
+      <h1>Sign up</h1>
       <form onSubmit={handleSubmit} style={styles.form}>
         <label>
           Name
@@ -75,7 +82,8 @@ export default function RegisterView() {
           />
         </label>
 
-        <button type="submit">Registration</button>
+        <Button onClick={onClick}>Sign up</Button>
+        {/* <button type="submit">Sign up</button> */}
       </form>
     </div>
   );

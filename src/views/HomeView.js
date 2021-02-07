@@ -7,22 +7,25 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
   },
-  title: {
-    fontWeight: 500,
-    fontSize: 48,
-    textAlign: 'center',
+  image: {
+    width: '1024px',
+    borderRadius: '10px',
+    boxShadow:
+      'inset -3px -3px 8px rgb(0 0 0 / 50%), inset 3px 3px 8px hsl(0deg 0% 100% / 90%), 3px 3px 8px -3px rgb(0 0 0 / 80%)',
   },
 };
 
 export default function HomeView() {
   return (
     <div style={styles.container}>
-      <h1 style={styles.title}>
-        Hello!
-        <span role="img" aria-label="Иконка приветствия">
+      <img
+        style={styles.image}
+        src="https://cdn.pixabay.com/photo/2015/05/28/10/31/hyacinth-787841_1280.jpg"
+        alt="welcome page"
+      />
+      {/* <span role="img" aria-label="Иконка приветствия">
           💁‍♀️
-        </span>
-      </h1>
+        </span> */}
     </div>
   );
 }

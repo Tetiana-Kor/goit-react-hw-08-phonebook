@@ -2,11 +2,12 @@ import { useEffect, Suspense, lazy } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Switch } from 'react-router-dom';
 import AppBar from './components/AppBar';
-// import Container from './components/Container';
+import Container from './components/Container';
 import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
 import { fetchCurrentUser } from './redux/auth/auth-operations';
 import { getIsRefreshingUser } from './redux/auth/auth-selectors';
+import './App.css';
 
 const HomeView = lazy(() => import('./views/HomeView'));
 const RegisterView = lazy(() => import('./views/RegisterView'));
@@ -24,7 +25,7 @@ export default function App() {
 
   return (
     !isRefreshingUser && (
-      <>
+      <Container>
         <AppBar />
 
         <Suspense fallback={<p>Loading...</p>}>
@@ -44,7 +45,7 @@ export default function App() {
             </PrivateRoute>
           </Switch>
         </Suspense>
-      </>
+      </Container>
     )
   );
 }
