@@ -1,48 +1,40 @@
 import * as serviceAPI from '../../services/service-api';
-import {
-  fetchContactsRequest,
-  fetchContactsSuccess,
-  fetchContactsError,
-  addContactRequest,
-  addContactSuccess,
-  addContactError,
-  deleteContactRequest,
-  deleteContactSuccess,
-  deleteContactError,
-} from './contacts-actions';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-export const fetchContacts = () => async dispatch => {
-  dispatch(fetchContactsRequest());
+export const fetchContacts = createAsyncThunk(
+  'contacts/fetchContacts',
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await serviceAPI.fetchContacts();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
 
-  try {
-    const { data } = await serviceAPI.fetchContacts();
-    dispatch(fetchContactsSuccess(data));
-  } catch (error) {
-    dispatch(fetchContactsError(error));
-  }
-};
+export const addContact = createAsyncThunk(
+  'contacts/addContact',
+  async ({ name, number }, { rejectWithValue }) => {
+    const contact = { name, number };
 
-export const addContact = (name, number) => async dispatch => {
-  const contact = {
-    name,
-    number,
-  };
+    try {
+      const { data } = await serviceAPI.addContact(contact);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
 
-  dispatch(addContactRequest());
-
-  try {
-    const { data } = await serviceAPI.addContact(contact);
-    dispatch(addContactSuccess(data));
-  } catch (error) {
-    dispatch(addContactError(error));
-  }
-};
-
-export const deleteContact = id => async dispatch => {
-  dispatch(deleteContactRequest());
-
-  serviceAPI
-    .deleteContact(id)
-    .then(() => dispatch(deleteContactSuccess(id)))
-    .catch(error => dispatch(deleteContactError(error)));
-};
+export const deleteContact = createAsyncThunk(
+  'contacts/deleteContact',
+  async (id, { rejectWithValue }) => {
+    try {
+      await serviceAPI.deleteContact(id);
+      return id;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);

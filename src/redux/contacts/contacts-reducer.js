@@ -1,22 +1,16 @@
 import { combineReducers } from 'redux';
 import { createReducer } from '@reduxjs/toolkit';
+import { changeFilter } from './contacts-actions';
 import {
-  fetchContactsRequest,
-  fetchContactsSuccess,
-  fetchContactsError,
-  addContactRequest,
-  addContactSuccess,
-  addContactError,
-  deleteContactRequest,
-  deleteContactSuccess,
-  deleteContactError,
-  changeFilter,
-} from './contacts-actions';
+  fetchContacts,
+  addContact,
+  deleteContact,
+} from './contacts-operations';
 
 const items = createReducer([], {
-  [fetchContactsSuccess]: (_, { payload }) => payload,
-  [addContactSuccess]: (state, { payload }) => [...state, payload],
-  [deleteContactSuccess]: (state, { payload }) =>
+  [fetchContacts.fulfilled]: (_, { payload }) => payload,
+  [addContact.fulfilled]: (state, { payload }) => [...state, payload],
+  [deleteContact.fulfilled]: (state, { payload }) =>
     state.filter(({ id }) => id !== payload),
 });
 
@@ -25,24 +19,24 @@ const filter = createReducer('', {
 });
 
 const isLoading = createReducer(false, {
-  [fetchContactsRequest]: () => true,
-  [fetchContactsSuccess]: () => false,
-  [fetchContactsError]: () => false,
-  [addContactRequest]: () => true,
-  [addContactSuccess]: () => false,
-  [addContactError]: () => false,
-  [deleteContactRequest]: () => true,
-  [deleteContactSuccess]: () => false,
-  [deleteContactError]: () => false,
+  [fetchContacts.pending]: () => true,
+  [fetchContacts.fulfilled]: () => false,
+  [fetchContacts.rejected]: () => false,
+  [addContact.pending]: () => true,
+  [addContact.fulfilled]: () => false,
+  [addContact.rejected]: () => false,
+  [deleteContact.pending]: () => true,
+  [deleteContact.fulfilled]: () => false,
+  [deleteContact.rejected]: () => false,
 });
 
 const error = createReducer(null, {
-  [fetchContactsError]: (_, { payload }) => payload,
-  [fetchContactsRequest]: () => null,
-  [addContactError]: (_, { payload }) => payload,
-  [addContactRequest]: () => null,
-  [deleteContactError]: (_, { payload }) => payload,
-  [deleteContactRequest]: () => null,
+  [fetchContacts.rejected]: (_, { payload }) => payload,
+  [fetchContacts.pending]: () => null,
+  [addContact.rejected]: (_, { payload }) => payload,
+  [addContact.pending]: () => null,
+  [deleteContact.rejected]: (_, { payload }) => payload,
+  [deleteContact.pending]: () => null,
 });
 
 export default combineReducers({

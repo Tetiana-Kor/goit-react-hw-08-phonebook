@@ -36,7 +36,7 @@ export default function App() {
             <Loader
               style={{ display: 'flex', justifyContent: 'center' }}
               type="Circles"
-              color="#00BFFF"
+              color="#23b1e7"
               height={100}
               width={100}
               timeout={3000} //3 secs

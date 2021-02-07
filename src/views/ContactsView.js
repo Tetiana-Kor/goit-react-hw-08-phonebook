@@ -10,9 +10,11 @@ import { getLoading } from '../redux/contacts/contacts-selectors';
 const styles = {
   phonebook: {
     textAlign: 'center',
+    margin: '0',
   },
   contacts: {
     textAlign: 'center',
+    margin: '10px',
   },
 };
 
