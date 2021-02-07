@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import * as operations from '../../redux/contacts/contacts-operations';
 import { getContacts } from '../../redux/contacts/contacts-selectors';
 import s from './ContactForm.module.css';
@@ -25,15 +26,15 @@ export default function ContactForm() {
     );
 
     if (name === '' || number === '') {
-      alert('Please enter all fields!');
+      toast.warn('Please enter all fields!');
       return true;
     }
 
     if (includeName.includes(name)) {
-      alert(`${name} is already in contacts`);
+      toast.info(`${name} is already in contacts`);
       return true;
     } else if (includeNumber.includes(number)) {
-      alert(`${number} is already in contacts`);
+      toast.info(`${number} is already in contacts`);
       return true;
     }
   };

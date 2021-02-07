@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import { logIn } from '../redux/auth/auth-operations';
 import Button from '../components/Button';
 
@@ -23,7 +24,7 @@ export default function LoginView({ onClick }) {
     event.preventDefault();
 
     if (email === '' || password === '') {
-      alert('fill out the form');
+      toast.error('fill out the form');
       return;
     }
 

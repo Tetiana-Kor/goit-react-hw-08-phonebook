@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import { register } from '../redux/auth/auth-operations';
 import Button from '../components/Button';
 
@@ -24,7 +25,7 @@ export default function RegisterView({ onClick }) {
     event.preventDefault();
 
     if (name === '' || email === '' || password === '') {
-      alert('fill out the form');
+      toast.error('fill out the form');
       return;
     }
 
